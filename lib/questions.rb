@@ -10,7 +10,6 @@ def round_down_number(float)
   float.floor
 end
 
-
 # turn a positive integer into a negative integer. A negative integer
 # stays negative
 def make_numbers_negative(number)
@@ -35,13 +34,14 @@ end
 # pairing up elements. e.g. ['a', 'b', 'c', 'd'] becomes
 # {'a' => 'b', 'c' => 'd'}
 def convert_array_to_a_hash(array)
-  array.map { |x| array.pop(2) }.to_h
+  array.map { array.pop(2) }.to_h
 end
 
 
 # take out all the capital letters from a string
 # so 'Hello JohnDoe' becomes 'ello ohnoe'
 def remove_capital_letters_from_string(string)
+  string.delete('[A-Z]')
 end
 
 
@@ -49,16 +49,19 @@ end
 # 'banana' becomes 'ban'. If the string is an odd number of letters
 # round up - so 'apple' becomes 'app'
 def get_first_half_of_string(string)
+ string[0, (string.length + 1)/2]
 end
 
 # convert a symbol into a string
 def turn_symbol_into_string(symbol)
+  symbol.to_s
 end
 
 
 # get the domain name *without* the .com part, from an email address
 # so onboarding@makersacademy.com becomes makersacademy
 def get_domain_name_from_email_address(email)
+  email.split('@')[1].split('.')[0]
 end
 
 # capitalize the first letter in each word of a string,
@@ -67,61 +70,74 @@ end
 # 'the lion the witch and the wardrobe' becomes
 # 'The Lion the Witch and the Wardrobe'
 def titleize_a_string(string)
+  string.capitalize.split.map { |x| /\.a|and|the/ === x ? x : x.capitalize }.join(' ')
 end
 
 # return true if a string contains any special characters
 # where 'special character' means anything apart from the letters
 # a-z (uppercase and lower) or numbers
 def check_a_string_for_special_characters(string)
+  string.match?(/[^\W][\w]/)
 end
 
 # keep only the elements that start with an a
 def select_elements_starting_with_a(array)
+  array.delete_if { |element| element[0] != "a" }
 end
 
 # keep only the elements that start with a vowel
 def select_elements_starting_with_vowel(array)
+  array.delete_if { |element| element[0] == /[aeiou]/ }
 end
 
 
 # remove instances of nil (but NOT false) from an array
 def remove_nils_from_array(array)
+  array.delete(nil)
 end
 
 # remove instances of nil AND false from an array
 def remove_nils_and_false_from_array(array)
+  array.delete(nil)
 end
 
 # don't reverse the array, but reverse every word inside it. e.g.
 # ['dog', 'monkey'] becomes ['god', 'yeknom']
 def reverse_every_element_in_array(array)
+  array.map { |word| word.reverse }
 end
 
 # discard the first 3 elements of an array,
 # e.g. [1, 2, 3, 4, 5, 6] becomes [4, 5, 6]
 def all_elements_except_first_3(array)
+  array.drop(3)
 end
 
 # add an element to the beginning of an array
 def add_element_to_beginning_of_array(array, element)
+  array.unshift(element)
 end
 
 # return the shortest word in an array
 def shortest_word_in_array(array)
+  array.reduce { |shortest_word, word| shortest_word.length < word.length ? shortest_word : word }
 end
 
 # return the shortest word in an array
 def longest_word_in_array(array)
+  array.reduce { |longest_word, word| longest_word.length > word.length ? longest_word : word }
 end
 
 # add up all the numbers in an array, so [1, 3, 5, 6]
 # returns 15
 def total_of_array(array)
+  array.sum
 end
 
 # get the average from an array, rounded to the nearest integer
 # so [10, 15, 25] should return 17
 def average_of_array(array)
+  (array.sum).to_f / (array.length).to_f.ceil
 end
 
 # get all the elements in an array, up until the first element
@@ -129,6 +145,7 @@ end
 # [1, 3, 5, 4, 1, 2, 6, 2, 1, 3, 7]
 # becomes [1, 3, 5, 4, 1, 2]
 def get_elements_until_greater_than_five(array)
+
 end
 
 # get all the letters used in an array of words and return
@@ -136,6 +153,7 @@ end
 # . e.g. the array ['cat', 'dog', 'fish'] becomes
 # ['a', 'c', 'd', 'f', 'g', 'h', 'i', 'o', 's', 't']
 def get_all_letters_in_array_of_words(array)
+  array.map { |x| x.chars }.flatten.sort
 end
 
 # BONUS SECTION
@@ -148,11 +166,13 @@ end
 # get the upper limit of a range. e.g. for the range 1..20, you
 # should return 20
 def get_upper_limit_of(range)
+  range.max
 end
 
 # should return true for a 3 dot range like 1...20, false for a
 # normal 2 dot range
 def is_a_3_dot_range?(range)
+
 end
 
 # get the square root of a number
@@ -165,6 +185,7 @@ end
 # called call_method_from_string('foobar')
 # the method foobar should be invoked
 def call_method_from_string(str_method)
+  str_method()
 end
 
 # return true if the date is a uk bank holiday for 2014
